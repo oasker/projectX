@@ -4,6 +4,7 @@ var io = require('socket.io')(http);
 http.listen(4000, () => {
   console.log('listening on *:4200');
 });
+var gameHandler = require('./gameHandler.js');
 var decks = require('./serverSideCard.js');
 
 class Game{
