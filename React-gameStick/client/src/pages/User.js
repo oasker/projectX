@@ -93,6 +93,7 @@ export default class User {
   //Choosing Black Cards
 
   submitCardToTable() {
+    console.log('Here')
     this.socket.emit('submitCard',this.deck.blackCards[this.deck.ind]);
   }
 

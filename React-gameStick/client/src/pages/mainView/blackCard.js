@@ -4,13 +4,14 @@ class Black extends Component {
 
   constructor(props){
     super();
+    this.state = props;
     this.props = props;
+    console.log(this.state)
     this.onSwipeLeft = this.swipeLeftCard.bind(this);
     this.onSwipeRight = this.swipeRightCard.bind(this);
     this.onSwipeUp = this.swipeCardUp.bind(this);
     this.deck = this.props.user.deck;
     this.user = this.props.user;
-    console.log(this.props);
     this.setUpSocketEventHandlers();
   }
 
@@ -51,20 +52,33 @@ class Black extends Component {
     this.user.socket.on("newBlackCard",(msg)=>{
       this.deck.blackCards[this.deck.ind].label = msg;
       this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
-      console.log(this.deck.blackCards[0], msg)
     });
 
     this.user.socket.on("filledDeck", msg =>{
       this.deck.fillHand(msg);
+      this.props.updateUser(this.user)
+
     });
 
     this.user.socket.on("whiteCard", msg => {
       this.deck.whiteCard = msg;
+      this.props.updateUser(this.user)
+
     });
 
     this.user.socket.on("userPickedCard", msg =>{
-      console.log("someone picked your card!")
+    });
+
+    this.user.socket.on("youArePicking",(msg)=>{
+      console.log("I am picking",this.user);
+      this.user.isPickingCards = true;
+      this.props.updateUser(this.user)
     })
+  }
+
+  componentDidMount(){
+    console.log("doner")
+    this.props.updateUser(this.user)
   }
 
   render() {
@@ -77,13 +91,13 @@ class Black extends Component {
           <li className="sb-list">{ this.user.userName }</li>
         </ul>
 
-        <div ng-hide="isInView" ng-controller="whiteCardController" id="whiteCard" className="white-card-container white-card">
-          <h4 id="whiteCardLabel">{ this.deck.whiteCard }</h4>
+        <div id="whiteCard" className="white-card-container white-card">
+          <h4 id="whiteCardLabel">{ this.state.user.deck.whiteCard }</h4>
         </div>
 
         <Swipe onSwipedLeft={ this.onSwipeLeft } onSwipedRight={ this.onSwipeRight }>
           <div id="blackCard" className="black-card-container black-card">
-            <h3 id="blackCardLabel">{ this.deck.currentBlackCard }</h3>
+            <h3 id="blackCardLabel">{ this.state.user.deck.currentBlackCard }</h3>
             <img id="logo" className="logo" src={ require("./imgs/blackLogo.PNG") }></img>
           </div>
         </Swipe>

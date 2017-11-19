@@ -10,9 +10,15 @@ class Game{
   constructor(){
     this.decks = decks;
     this.users = [];
+    this.isPicking = '';
+  }
+  addUser(user){
+    this.users.push(user);
+    console.log(this.users);
   }
 }
 
+let game = new Game();
 app.use(require('express').static('public'));
 var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
 
@@ -21,19 +27,31 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-  // init game in general
+  // initiate game
+
+  // send cards to users
+
+  // recived cards from user
+
+  socket.on('addUserName',(msg)=>{
+
+    if(game.isPicking === '' ){
+      game.isPicking = {userName: msg, socket: socket.id};
+      socket.emit('youArePicking');
+    }
+      game.addUser({userName: msg, socket: socket.id})
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
 
   socket.on("startGame" ,function(){
 
   })
 
-
-  console.log(socket.id);
   socket.emit('users',socket.id)
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
 
   socket.on('getBlackCard', (msg) => {
     console.log('getingBlack')
@@ -58,10 +76,18 @@ io.on('connection', function(socket) {
   socket.emit('whiteCard', currentWhiteCard);
 
   socket.on("submitCard", (msg) => {
+    console.log(msg)
     socket.emit("newBlackCard", decks.blackCardDeck.getCardFromDeck());
+    socket.emit('userPickedCard',msg)
   })
 
   socket.on("test", (msg) => {
     console.log("test");
+  })
+
+  socket.on('userChooseCard',()=>{
+    // add point to the user whose card was chosen,
+    // send a notification to the user whos card was chosen
+    // send a starting flag to the next user
   })
 });
