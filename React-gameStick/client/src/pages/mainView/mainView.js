@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import Swipe from 'react-swipe-component';
 class Mainview extends Component {
 
   constructor(props){
     super();
     this.state = props;
     this.props = props;
-    console.log(this.state)
     this.deck = this.props.user.deck;
     this.user = this.props.user;
     this.setUpSocketEventHandlers();

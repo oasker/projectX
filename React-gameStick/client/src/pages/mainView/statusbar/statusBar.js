@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Swipe from 'react-swipe-component';
 
 class StatusBar extends Component {
 

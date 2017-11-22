@@ -8,7 +8,6 @@ class SubmitView extends Component {
     super();
     this.state = props;
     this.props = props;
-    console.log(this.state)
     this.onSwipeLeft = this.swipeLeftCard.bind(this);
     this.onSwipeRight = this.swipeRightCard.bind(this);
     this.onSwipeUp = this.swipeCardUp.bind(this);
@@ -78,7 +77,6 @@ class SubmitView extends Component {
   }
 
   componentDidMount(){
-    console.log("doner")
     this.props.updateUser(this.user)
   }
 
@@ -94,7 +92,7 @@ class SubmitView extends Component {
         <Swipe onSwipedLeft={ this.onSwipeLeft } onSwipedRight={ this.onSwipeRight }>
           <div id="blackCard" className="black-card-container black-card">
             <h3 id="blackCardLabel">{ this.state.user.deck.currentBlackCard }</h3>
-            <img id="logo" className="logo" src={ require("./imgs/blackLogo.PNG") }></img>
+            <img alt='none' id="logo" className="logo" src={ require("./imgs/blackLogo.PNG") }></img>
           </div>
         </Swipe>
 

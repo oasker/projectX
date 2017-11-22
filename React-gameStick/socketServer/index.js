@@ -19,7 +19,6 @@ class Game{
   }
 }
 
-let game = new Game();
 app.use(require('express').static('public'));
 var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
 
@@ -33,7 +32,8 @@ io.on('connection', function(socket) {
   // send cards to users
 
   // recived cards from user
-
+  let game = new Game();
+  console.log(decks.whi)
   socket.on('addUserName',(msg)=>{
 
     if(game.isPicking === '' ){
@@ -69,7 +69,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('getWhiteCard', () => {
-    currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
+    // currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
     // socket.broadcast.emit('whiteCard', currentWhiteCard)
     socket.emit('whiteCard', currentWhiteCard)
   })

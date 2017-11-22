@@ -13,9 +13,6 @@ class App extends Component {
   updateUser(user) {
     this.setState({user : user})
   }
-  constructor() {
-    super();
-  }
   componentWillMount() {
     this.setState({
       user: new User(socket)

@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-
 
 class Card {
   constructor(index,label) {
@@ -57,7 +55,6 @@ class Deck {
       var x = new Card(i, ar[i]); // get a black card
       this.insertCard(x);
     }
-    console.log(this.blackCards);
     this.currentBlackCard=this.blackCards[0].label;
   }
 }
