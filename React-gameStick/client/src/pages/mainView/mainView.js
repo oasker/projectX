@@ -34,7 +34,6 @@ class Mainview extends Component {
     this.user.socket.on("youArePicking",(msg)=>{
       console.log("I am picking");
       this.user.props.isPicking = true;
-
       console.log("OMG", this.user)
       this.props.updateUser(this.user)
     })
@@ -61,8 +60,8 @@ class Mainview extends Component {
         <div id="whiteCard" className="white-card-container white-card">
           <h4 id="whiteCardLabel">{ this.user.deck.whiteCard }</h4>
         </div>
-
         <div className="bottom-control">
+
           <button onClick={ this.onSwipeUp }>Submit Card</button>
         </div>
       </div>

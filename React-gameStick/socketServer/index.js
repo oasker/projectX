@@ -32,6 +32,7 @@ io.on('connection', function(socket) {
   // send cards to users
 
   // recived cards from user
+
   let game = new Game();
   console.log(decks.whi)
   socket.on('addUserName',(msg)=>{
@@ -83,7 +84,9 @@ io.on('connection', function(socket) {
   })
 
   socket.on("test", (msg) => {
-    console.log("test");
+    msg = JSON.parse(msg);
+    console.log(msg.user,msg.text);
+    socket.to(msg.user).emit("testR",msg.text)
   })
 
   socket.on('userChooseCard',()=>{
@@ -91,4 +94,5 @@ io.on('connection', function(socket) {
     // send a notification to the user whos card was chosen
     // send a starting flag to the next user
   })
+
 });

@@ -48,6 +48,11 @@ class SubmitView extends Component {
     card.addEventListener("animationend", this.removeClass.bind(this) , false);
   }
 
+  sendToPlayer(){
+    var val = document.getElementById('test-input').value;
+    this.user.socket.emit("test",JSON.stringify({ "user" : val , "text":"TESTING"}))
+  }
+
   // Socket setup
 
   setUpSocketEventHandlers(){
@@ -74,6 +79,10 @@ class SubmitView extends Component {
       this.user.isPickingCards = true;
       this.props.updateUser(this.user)
     })
+
+    this.user.socket.on("testR",(msg)=>{
+      console.log(msg);
+    })
   }
 
   componentDidMount(){
@@ -96,6 +105,8 @@ class SubmitView extends Component {
           </div>
         </Swipe>
 
+        <input type="text" id='test-input' />
+        <button onClick={this.sendToPlayer.bind(this)} id ="test-button">Test</button>
         <div className="bottom-control">
           <button onClick={ this.onSwipeUp }>Submit Card</button>
         </div>

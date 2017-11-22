@@ -266,3 +266,16 @@ div.on-swipe-up {
 
   }
 }
+
+
+#test-input{
+  position: absolute;
+  top:50%;
+  z-index: 999;
+}
+
+#test-button{
+  position: absolute;
+  top:55%;
+  z-index: 999;
+}
