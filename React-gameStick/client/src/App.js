@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import './App.css';
 
-import Black from './pages/mainView/blackCard';
+import SubmitView from './pages/mainView/submitView';
 import User from './pages/User';
 import Mainview from './pages/mainView/mainView'
 
@@ -26,7 +26,7 @@ class App extends Component {
     if(this.state.user.isPicking){
       return <Mainview user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>
     }else{
-      return <Black user = { this.state.user } updateUser = { this.updateUser.bind(this) }></Black>
+      return <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this) }></SubmitView>
     }
   }
 

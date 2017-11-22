@@ -1,4 +1,4 @@
-class GameHandler(){
+class GameHandler{
   constructor(){
     this.games = {};
   }
@@ -6,6 +6,6 @@ class GameHandler(){
     this.games[game.id] = game;
   }
   getGame(id){
-    return this.games[id]
+    return this.games[id];
   }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Swipe from 'react-swipe-component';
-class Black extends Component {
+import StatusBar from './statusbar/statusBar.js';
+
+class SubmitView extends Component {
 
   constructor(props){
     super();
@@ -15,38 +17,39 @@ class Black extends Component {
     this.setUpSocketEventHandlers();
   }
 
-  swipeLeftCard() {
-    var card = document.getElementById("blackCard");
-    var originalStyle = "black-card-container black-card";
-    card.className = "card-left-transition " + originalStyle;
-    setTimeout(() => {
-      card.className = originalStyle;
+  // UI
+  removeClass(e){
+    let target = e.target;
+    if(target.className.includes("right")){
+      this.deck.getNextCard();
+    } else if(target.className.includes("left")){
       this.deck.getPreviousCard();
-      this.props.updateUser(this.user);
-    }, 600);
+    } else if(target.className.includes("up")){
+      this.user.submitCardToTable();
+    }
+    target.className = "black-card-container black-card";
+    this.props.updateUser(this.user);
   }
 
   swipeRightCard(){
     var card = document.getElementById("blackCard");
-    var originalStyle = "black-card-container black-card";
-    card.className = "card-right-transition " + originalStyle;
-    setTimeout(()=>{
-      card.className = originalStyle;
-      this.deck.getNextCard();
-      this.props.updateUser(this.user);
-    }, 600);
+    card.className += " card-right-transition";
+    card.addEventListener("animationend", this.removeClass.bind(this) , false);
   }
 
   swipeCardUp(){
     var card = document.getElementById("blackCard");
-    var originalStyle = "black-card-container black-card";
-    card.className = "on-swipe-up " + originalStyle;
-    setTimeout(()=>{
-      card.className = originalStyle;
-      this.props.updateUser(this.user);
-    }, 600);
-    this.user.submitCardToTable();
+    card.className += " on-swipe-up";
+    card.addEventListener("animationend", this.removeClass.bind(this) , false);
   }
+
+  swipeLeftCard() {
+    var card = document.getElementById("blackCard");
+    card.className += " card-left-transition ";
+    card.addEventListener("animationend", this.removeClass.bind(this) , false);
+  }
+
+  // Socket setup
 
   setUpSocketEventHandlers(){
     this.user.socket.on("newBlackCard",(msg)=>{
@@ -57,7 +60,6 @@ class Black extends Component {
     this.user.socket.on("filledDeck", msg =>{
       this.deck.fillHand(msg);
       this.props.updateUser(this.user)
-
     });
 
     this.user.socket.on("whiteCard", msg => {
@@ -70,7 +72,6 @@ class Black extends Component {
     });
 
     this.user.socket.on("youArePicking",(msg)=>{
-      console.log("I am picking",this.user);
       this.user.isPickingCards = true;
       this.props.updateUser(this.user)
     })
@@ -84,12 +85,7 @@ class Black extends Component {
   render() {
     return (
       <div >
-        <ul className="status-bar">
-          <li className="sb-list">User : { this.user.userName }</li>
-          <li className="sb-list">Cards Won : { this.user.whiteCards }</li>
-          <li className="sb-list">{ this.user.turn } turn</li>
-          <li className="sb-list">{ this.user.userName }</li>
-        </ul>
+        <StatusBar user = {this.user}/>
 
         <div id="whiteCard" className="white-card-container white-card">
           <h4 id="whiteCardLabel">{ this.state.user.deck.whiteCard }</h4>
@@ -110,4 +106,4 @@ class Black extends Component {
   }
 }
 
-export default Black;
+export default SubmitView;
