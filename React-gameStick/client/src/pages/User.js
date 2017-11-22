@@ -13,6 +13,7 @@ class Deck {
     this.whiteCard = "White";
     this.currentBlackCard = "Black";
     this.ind = 0;
+    this.cardsRecived = [];
   }
 
   insertCard(card){

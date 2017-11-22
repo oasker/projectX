@@ -15,7 +15,7 @@ class StatusBar extends Component {
         <ul className="status-bar">
           <li className="sb-list">User : { this.user.userName }</li>
           <li className="sb-list">Cards Won : { this.user.whiteCards }</li>
-          <li className="sb-list">{ this.user.turn } turn</li>
+          <li className="sb-list">It is { this.user.turn }s  turn</li>
           <li className="sb-list">{ this.user.userName }</li>
         </ul>
     );

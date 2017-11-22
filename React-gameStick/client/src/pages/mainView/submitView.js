@@ -13,6 +13,7 @@ class SubmitView extends Component {
     this.onSwipeUp = this.swipeCardUp.bind(this);
     this.deck = this.props.user.deck;
     this.user = this.props.user;
+    this.socket = this.user.socket;
     this.setUpSocketEventHandlers();
   }
 
@@ -24,7 +25,7 @@ class SubmitView extends Component {
     } else if(target.className.includes("left")){
       this.deck.getPreviousCard();
     } else if(target.className.includes("up")){
-      this.user.submitCardToTable();
+      this.submitCardToTable();
     }
     target.className = "black-card-container black-card";
     this.props.updateUser(this.user);
@@ -55,34 +56,54 @@ class SubmitView extends Component {
 
   // Socket setup
 
+  // Socket Events/Emitions
+
+  submitCardToTable(){
+    this.socket.emit("submitCard", { "userName" : this.user.userName , "blackCard" : this.deck.currentBlackCard , "socket" : this.user.socket.id});
+  }
+
   setUpSocketEventHandlers(){
-    this.user.socket.on("newBlackCard",(msg)=>{
+    // Start Game
+    this.socket.on("filledDeck", msg =>{
+      this.deck.fillHand(msg);
+      this.props.updateUser(this.user)
+    });
+    // During Game
+
+    this.socket.on("newBlackCard",(msg)=>{
       this.deck.blackCards[this.deck.ind].label = msg;
       this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
     });
 
-    this.user.socket.on("filledDeck", msg =>{
-      this.deck.fillHand(msg);
-      this.props.updateUser(this.user)
-    });
-
-    this.user.socket.on("whiteCard", msg => {
+    this.socket.on("whiteCard", msg => {
       this.deck.whiteCard = msg;
       this.props.updateUser(this.user)
-
     });
 
-    this.user.socket.on("userPickedCard", msg =>{
-    });
-
-    this.user.socket.on("youArePicking",(msg)=>{
+    this.socket.on("youArePicking",(msg)=>{
       this.user.isPickingCards = true;
-      this.props.updateUser(this.user)
+      this.props.updateUser(this.user);
+      console.log("YOUR PICKING");
     })
 
-    this.user.socket.on("testR",(msg)=>{
+    this.socket.on("userSentCard",(msg)=>{
+      console.log(`Recived Card ${ msg.blackCard } form ${ msg.userName } with SocketID = ${ msg.socket }`);
+      // add card to cardsRecived
+
+      // Show cards on the thing
+    })
+
+    this.socket.on("whoseTurnIsIt", msg =>{
+      this.user.turn = (this.user.userName === msg )?("my"):(msg);
+      this.setState({ user : this.user })
+      console.log(this.state + " " + msg)
+    })
+
+    this.socket.on("testR",(msg)=>{
       console.log(msg);
     })
+
+    // End Game
   }
 
   componentDidMount(){
@@ -92,10 +113,10 @@ class SubmitView extends Component {
   render() {
     return (
       <div >
-        <StatusBar user = {this.user}/>
+        <StatusBar user = {this.state.user}/>
 
         <div id="whiteCard" className="white-card-container white-card">
-          <h4 id="whiteCardLabel">{ this.state.user.deck.whiteCard }</h4>
+          <h6 id="whiteCardLabel">{ this.state.user.deck.whiteCard }</h6>
         </div>
 
         <Swipe onSwipedLeft={ this.onSwipeLeft } onSwipedRight={ this.onSwipeRight }>
@@ -104,9 +125,6 @@ class SubmitView extends Component {
             <img alt='none' id="logo" className="logo" src={ require("./imgs/blackLogo.PNG") }></img>
           </div>
         </Swipe>
-
-        <input type="text" id='test-input' />
-        <button onClick={this.sendToPlayer.bind(this)} id ="test-button">Test</button>
         <div className="bottom-control">
           <button onClick={ this.onSwipeUp }>Submit Card</button>
         </div>
