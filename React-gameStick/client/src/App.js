@@ -23,7 +23,7 @@ class App extends Component {
     if(this.state.user.isPicking){
       return <Mainview user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>
     }else{
-      return <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this) }></SubmitView>
+      return <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this) }/>
     }
   }
 

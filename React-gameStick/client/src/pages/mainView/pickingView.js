@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import StausBar from './statusbar/statusBar.js';
+import StatusBar from './statusbar/statusBar.js';
+import Card from './cardModule/cardComponent.js';
+import './pickingView.css';
 
 class Mainview extends Component {
 
@@ -10,10 +12,6 @@ class Mainview extends Component {
     this.deck = this.props.user.deck;
     this.user = this.props.user;
     this.setUpSocketEventHandlers();
-  }
-
-  cardRecived(msg){
-    console.log(msg)
   }
 
   setUpSocketEventHandlers(){
@@ -33,7 +31,7 @@ class Mainview extends Component {
 
     });
 
-    this.user.socket.on("youArePicking", msg =>{
+    this.user.socket.on("youArePicking",(msg)=>{
       console.log("I am picking");
       this.user.props.isPicking = true;
       this.props.updateUser(this.user)
@@ -51,20 +49,13 @@ class Mainview extends Component {
   render() {
     return (
       <div >
-        <ul className="status-bar">
-          <li className="sb-list">Usersfdfsd : { this.user.userName }</li>
-          <li className="sb-list">Cards Won : { this.user.whiteCards }</li>
-          <li className="sb-list">{ this.user.turn } turn</li>
-          <li className="sb-list">{ this.user.userName }</li>
-        </ul>
-
+        <StatusBar/>
         <div id="whiteCard" className="white-card-container white-card">
           <h4 id="whiteCardLabel">{ this.user.deck.whiteCard }</h4>
         </div>
-        <div className="bottom-control">
 
-          <button onClick={ this.onSwipeUp }>Submit Card</button>
-        </div>
+        <Card/>
+          <input type="button" id="submit-button" onClick={ this.onSwipeUp }>Main View</input>
       </div>
     );
   }

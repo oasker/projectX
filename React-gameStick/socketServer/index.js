@@ -1,9 +1,11 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
 http.listen(4000, () => {
   console.log('listening on *:4200');
 });
+
 var gameHandler = require('./gameHandler.js');
 var decks = require('./serverSideCard.js');
 
@@ -25,6 +27,7 @@ class Game {
     this.cardsOnTable.push(card);
   }
 }
+
 let game = new Game();
 
 app.use(require('express').static('public'));
@@ -37,6 +40,7 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
   // initiate game
   console.log(game.users);
+  
   socket.on('addUserName', (msg) => {
     if (game.users.length === 0) {
       game.isPicking = {
@@ -49,7 +53,7 @@ io.on('connection', function(socket) {
       userName: msg,
       socket: socket.id
     })
-    socket.emit("whoseTurnIsIt", game.isPicking.userName ) 
+    socket.emit("whoseTurnIsIt", game.isPicking.userName )
     });
 
   socket.on('fillDeck', (msg) => {
