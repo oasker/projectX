@@ -65,10 +65,3 @@ class GameManager {
 }
 
 var gameManager = new GameManager();
-
-gameManager.addRoom(gameManager.getNewRoomCode())
-gameManager.addRoom(gameManager.getNewRoomCode())
-gameManager.addRoom(gameManager.getNewRoomCode())
-gameManager.addRoom(gameManager.getNewRoomCode())
-
-console.log(gameManager)
