@@ -49,7 +49,7 @@ io.on('connection', function(socket) {
       userName: msg,
       socket: socket.id
     })
-    socket.emit("whoseTurnIsIt", game.isPicking.userName ) 
+    socket.emit("whoseTurnIsIt", game.isPicking.userName )
     });
 
   socket.on('fillDeck', (msg) => {

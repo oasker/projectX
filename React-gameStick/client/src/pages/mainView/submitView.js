@@ -69,8 +69,7 @@ class SubmitView extends Component {
       this.props.updateUser(this.user)
     });
     // During Game
-
-    this.socket.on("newBlackCard",(msg)=>{
+    this.socket.on("newBlackCard", msg =>{
       this.deck.blackCards[this.deck.ind].label = msg;
       this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
     });
@@ -80,13 +79,13 @@ class SubmitView extends Component {
       this.props.updateUser(this.user)
     });
 
-    this.socket.on("youArePicking",(msg)=>{
+    this.socket.on("youArePicking", msg =>{
       this.user.isPickingCards = true;
       this.props.updateUser(this.user);
       console.log("YOUR PICKING");
     })
 
-    this.socket.on("userSentCard",(msg)=>{
+    this.socket.on("userSentCard", msg =>{
       console.log(`Recived Card ${ msg.blackCard } form ${ msg.userName } with SocketID = ${ msg.socket }`);
       // add card to cardsRecived
 
@@ -99,10 +98,9 @@ class SubmitView extends Component {
       console.log(this.state + " " + msg)
     })
 
-    this.socket.on("testR",(msg)=>{
+    this.socket.on("testR", msg =>{
       console.log(msg);
     })
-
     // End Game
   }
 
@@ -125,6 +123,7 @@ class SubmitView extends Component {
             <img alt='none' id="logo" className="logo" src={ require("./imgs/blackLogo.PNG") }></img>
           </div>
         </Swipe>
+
         <div className="bottom-control">
           <button onClick={ this.onSwipeUp }>Submit Card</button>
         </div>
