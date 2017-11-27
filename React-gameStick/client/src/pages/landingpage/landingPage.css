@@ -16,6 +16,6 @@
   box-shadow: 10px 10px;
 }
 
-.landing-page-roomcode-input{
+.landing-page-roomcode-input,.landing-page-input{
   border: 1px solid lightgrey;
 }

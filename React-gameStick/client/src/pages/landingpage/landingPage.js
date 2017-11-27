@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GameChoice from './gamechoice/gameChoice.js';
+import UserName  from './gamechoice/userName.js';
 import './landingPage.css';
 
 class LandingPage extends Component {
@@ -8,11 +9,11 @@ class LandingPage extends Component {
   }
 
   componentWillMount(){
-    this.setState({ view : <GameChoice joinGameView = { this.joinGameView.bind(this) } startGameView={ this.startGameView.bind(this)}/> , user : this.props.user})
+    this.setState({ view : <UserName/> })
   }
 
   setUserName(){
-    
+
   }
 
   joinGame(msg){
@@ -28,7 +29,7 @@ class LandingPage extends Component {
           Users in
           <li></li>
         </ul>
-        <button onClick={ ()=>{ console.log('initiateGame')} } className="btn"> Everyone has started. </button>
+        <button onClick={ ()=>{ console.log('initiateGame') } } className="btn"> Everyone has started. </button>
       </div>
     )
   }
@@ -63,7 +64,6 @@ class LandingPage extends Component {
   }
 
   componentDidMount(){
-    // this.setState({view : <GameChoice joinGameView = { this.joinGameView.bind(this) } startGameView={ this.startGameView.bind(this) }  /> });
   }
 
 
@@ -73,8 +73,6 @@ class LandingPage extends Component {
         <div className="landing-page-pop-up text-center">
         <h1>Cards Against Hummanity</h1>
           <br/>
-          <p>Choose Username</p>
-          <input id='userName' placeholder="Enter username" className="landing-page-roomcode-input" type="text"></input>
           {
             this.state.view
           }
