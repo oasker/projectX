@@ -17,7 +17,6 @@ class SubmitView extends Component {
     this.setUpSocketEventHandlers();
   }
 
-  // UI
   removeClass(e){
     let target = e.target;
     if(target.className.includes("right")){
@@ -51,57 +50,7 @@ class SubmitView extends Component {
 
   sendToPlayer(){
     var val = document.getElementById('test-input').value;
-    this.user.socket.emit("test",JSON.stringify({ "user" : val , "text":"TESTING"}))
-  }
-
-  // Socket setup
-
-  // Socket Events/Emitions
-
-  submitCardToTable(){
-    this.socket.emit("submitCard", { "userName" : this.user.userName , "blackCard" : this.deck.currentBlackCard , "socket" : this.user.socket.id});
-  }
-
-  setUpSocketEventHandlers(){
-    // Start Game
-    this.socket.on("filledDeck", msg =>{
-      this.deck.fillHand(msg);
-      this.props.updateUser(this.user)
-    });
-    // During Game
-    this.socket.on("newBlackCard", msg =>{
-      this.deck.blackCards[this.deck.ind].label = msg;
-      this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
-    });
-
-    this.socket.on("whiteCard", msg => {
-      this.deck.whiteCard = msg;
-      this.props.updateUser(this.user)
-    });
-
-    this.socket.on("youArePicking", msg =>{
-      this.user.isPickingCards = true;
-      this.props.updateUser(this.user);
-      console.log("YOUR PICKING");
-    })
-
-    this.socket.on("userSentCard", msg =>{
-      console.log(`Recived Card ${ msg.blackCard } form ${ msg.userName } with SocketID = ${ msg.socket }`);
-      // add card to cardsRecived
-
-      // Show cards on the thing
-    })
-
-    this.socket.on("whoseTurnIsIt", msg =>{
-      this.user.turn = (this.user.userName === msg )?("my"):(msg);
-      this.setState({ user : this.user })
-      console.log(this.state + " " + msg)
-    })
-
-    this.socket.on("testR", msg =>{
-      console.log(msg);
-    })
-    // End Game
+    this.user.sendCardToPlayer(val);
   }
 
   componentDidMount(){
@@ -124,7 +73,7 @@ class SubmitView extends Component {
           </div>
         </Swipe>
 
-        <div className="bottom-control">
+        <div className="bottom-control bottom">
           <button onClick={ this.onSwipeUp }>Submit Card</button>
         </div>
       </div>

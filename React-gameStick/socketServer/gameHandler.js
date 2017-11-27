@@ -22,6 +22,7 @@ class GameManager {
     constructor() {
         this.roomCodes = {}
     }
+
     getNewRoomCode() {
         var code = Array.from(Array(5)).map(()=>{
             return this.randomNumber()
@@ -29,13 +30,14 @@ class GameManager {
         ).map(val=>{
             return String.fromCharCode(parseInt(val + 97))
         }
-        ).join('');
+      ).join('').toUpperCase();
 
         if (this.roomCodeIsUnique(code)) {
             return code;
         } else {
             this.getNewRoomCode();
         }
+        return code;
     }
 
     randomNumber() {
@@ -55,6 +57,7 @@ class GameManager {
             game: new Game(),
             lastUsed: new Date().getTime()
         };
+        return roomCode;
     }
 
     deleteOldRooms() {
@@ -62,6 +65,12 @@ class GameManager {
 
         }
     }
-}
 
-var gameManager = new GameManager();
+    //
+
+    roomCodeExists(roomCode){
+      return roomCode in this.roomCodes;
+    }
+}
+module.export = new Game()
+module.exports = new GameManager()

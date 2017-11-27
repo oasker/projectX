@@ -16,7 +16,7 @@ BlackCard {
   color: blue
 }
 
-button {
+button.bottom {
   width: 100%;
   padding: 10px;
   -webkit-border-radius: 0;
