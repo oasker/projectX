@@ -62,7 +62,7 @@ class Deck {
 
 export default class User {
   constructor(socket){
-    this.id = 0;
+    this.id = socket.id;
     this.userName = "Jeff";
     this.deck = new Deck();
     this.cardsEarned = 0;

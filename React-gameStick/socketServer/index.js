@@ -10,7 +10,6 @@ http.listen(4000, () => {
 
 
 app.use(require('express').static('public'));
-var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/html.html');
@@ -24,7 +23,7 @@ app.get('/', function(req, res) {
 var gameHandler = require('./gameHandler.js');
 var Game = require('./game.js')
 var decks = require('./serverSideCard.js');
-
+var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
 //==============================================================================
 //==== Socket Stuff ============================================================
 //==============================================================================
@@ -37,19 +36,20 @@ io.on('connection', function(socket) {
 
   socket.on('joinGame',(msg)=>{
     console.log(msg.roomCode.toUpperCase())
+    console.log(msg)
     if(gameHandler.roomCodeExists(msg.roomCode.toUpperCase())){
-
-      gameHandler.roomCodes[msg.roomCode.toUpperCase()].game.addUser(msg.userName);
-
-        console.log(gameHandler.roomCodes[msg.roomCode.toUpperCase()].game.users)
+      gameHandler.roomCodes[msg.roomCode.toUpperCase()].game.addUser({userName : msg.userName , socket : socket.id });
     } else {
       socket.emit("err","room Code doesn't Exists");
     }
   })
 
   socket.on('startNewGame', msg => {
+    console.log(msg)
     var code = gameHandler.getNewRoomCode();
     gameHandler.addRoom(code)
+    gameHandler.roomCodes[code].game.isPicking = { userName : msg.userName , socket : socket.id }
+    gameHandler.roomCodes[code].game.addUser({ userName : msg.userName , socket : socket.id })
     socket.emit('newRoomCode' , { roomCode : code } )
   })
 
@@ -113,4 +113,7 @@ io.on('connection', function(socket) {
     console.log('user disconnected');
   });
 
+  socket.on('getGameCode',(id)=>{
+    socket.emit('game',gameHandler.getRoomCodeById(id));
+  })
 });

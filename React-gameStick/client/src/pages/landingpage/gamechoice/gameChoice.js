@@ -14,6 +14,7 @@ class GameChoice extends Component {
       userName.style.border = "2px solid red";
       return false;
     }
+    console.log("test")
   }
 
   render() {

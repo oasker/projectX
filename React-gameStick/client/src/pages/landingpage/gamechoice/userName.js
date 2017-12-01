@@ -18,11 +18,7 @@ class UserName extends Component {
   render() {
     return (
         <div className="text-center">
-          <h3>Enter Username</h3>
-          <br/>
-          <input className='landing-page-input' id='userName' placeholder="Enter Username" ></input>
-          <br/>
-          <button className='btn'>Enter</button>
+          <h6>Enter Usernam : <input className='landing-page-input'  id='userName' placeholder="Enter Username" ></input></h6>
         </div>
     );
   }

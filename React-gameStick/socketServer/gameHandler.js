@@ -1,9 +1,10 @@
 class Game {
-    constructor() {
+    constructor(id) {
         this.decks = [];
         this.users = [];
         this.isPicking = {};
         this.cardsOnTable = [];
+        this.gameID = id;
     }
     addUser(user) {
         this.users.push(user);
@@ -54,7 +55,7 @@ class GameManager {
 
     addRoom(roomCode) {
         this.roomCodes[roomCode] = {
-            game: new Game(),
+            game: new Game(roomCode),
             lastUsed: new Date().getTime()
         };
         return roomCode;
@@ -67,6 +68,10 @@ class GameManager {
     }
 
     //
+
+    getRoomCodeById(id){
+      return this.roomCodes[id]
+    }
 
     roomCodeExists(roomCode){
       return roomCode in this.roomCodes;
