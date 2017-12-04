@@ -10,7 +10,6 @@ http.listen(4000, () => {
 
 
 app.use(require('express').static('public'));
-
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/html.html');
 });
@@ -19,11 +18,11 @@ app.get('/', function(req, res) {
 //==== Cards Stuff =============================================================
 //==============================================================================
 
-
 var gameHandler = require('./gameHandler.js');
 var Game = require('./game.js')
 var decks = require('./serverSideCard.js');
 var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
+
 //==============================================================================
 //==== Socket Stuff ============================================================
 //==============================================================================
@@ -122,4 +121,6 @@ io.on('connection', function(socket) {
   socket.on('getGameCode',(id)=>{
     socket.emit('game',gameHandler.getRoomCodeById(id));
   })
+
+  
 });

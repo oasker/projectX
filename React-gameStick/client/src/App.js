@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+
 import './App.css';
 
 import SubmitView from './pages/mainView/submitView';
@@ -8,6 +9,10 @@ import LandingPage from './pages/landingpage/landingPage'
 import User from './pages/User';
 
 let socket = io.connect('http://localhost:4000');
+
+// =============================================================================
+// === Main View ===============================================================
+// =============================================================================
 
 class App extends Component {
   constructor(){
@@ -37,12 +42,11 @@ class App extends Component {
   }
 
   componentDidMount(){
+    this.pickingView = <PickingView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>;
+    this.submitView = <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>;
     this.user.socket.on('gameHasStarted',(msg)=>{
       this.setUI();
     })
-
-    this.pickingView = <PickingView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>;
-    this.submitView = <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this) }/>
   }
 
   render() {
