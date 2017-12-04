@@ -32,11 +32,7 @@ class App extends Component {
     if(this.state.user.isPicking){
       this.setState({ view : this.pickingView });
     }else{
-<<<<<<< HEAD
-      return <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this) }/>
-=======
       this.setState({ view : this.submitView });
->>>>>>> mainViewChange
     }
   }
 

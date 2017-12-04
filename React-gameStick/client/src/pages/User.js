@@ -91,9 +91,6 @@ export default class User {
   }
 
   setUpSocketListners(){
-    this.socket.on("test",(msg)=>{
-      console.log(msg)
-    })
 
     this.socket.on("newBlackCard",(msg)=>{
       console.log(msg)

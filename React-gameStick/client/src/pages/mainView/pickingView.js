@@ -53,22 +53,15 @@ class Mainview extends Component {
     return (
       <div >
         <StatusBar/>
-<<<<<<< HEAD
-=======
-
->>>>>>> mainViewChange
         <div id="whiteCard" className="white-card-container white-card">
           <h4 id="whiteCardLabel">{ this.user.deck.whiteCard }</h4>
         </div>
 
         <Card/>
-<<<<<<< HEAD
           <input type="button" id="submit-button" onClick={ this.onSwipeUp }>Main View</input>
-=======
 
         <input type="button" id="submit-button" onClick={ this.submitCardToTable }>Main View</input>
 
->>>>>>> mainViewChange
       </div>
     );
   }
