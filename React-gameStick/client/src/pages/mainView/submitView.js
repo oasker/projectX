@@ -4,8 +4,12 @@ import StatusBar from './statusbar/statusBar.js';
 
 class SubmitView extends Component {
 
+  //============================================================================
+  //=== Setup ==================================================================
+  //============================================================================
+
   constructor(props){
-    super();
+    super(props);
     this.state = props;
     this.props = props;
     this.onSwipeLeft = this.swipeLeftCard.bind(this);
@@ -18,10 +22,14 @@ class SubmitView extends Component {
     this.setUpSocketListners();
   }
 
+  componentDidMount(){
+    this.setState({user : this.user})
+    this.props.updateUser(this.state.user);
+  }
+
   setUpSocketListners(){
     this.socket.on("newDeck", msg =>{
       this.deck.fillHand(msg);
-      console.log(msg)
       this.props.updateUser(this.user);
       this.setState({user : this.user})
     });
@@ -37,8 +45,12 @@ class SubmitView extends Component {
     });
   }
 
-  removeClass(e){
-    let target = e.target;
+  //============================================================================
+  //=== UI/Visual ==============================================================
+  //============================================================================
+
+  removeClass(event){
+    let target = event.target;
     if(target.className.includes("right")){
       this.deck.getNextCard();
     } else if(target.className.includes("left")){
@@ -49,7 +61,6 @@ class SubmitView extends Component {
     target.className = "black-card-container black-card";
     this.props.updateUser(this.user);
     this.setState({user : this.user})
-    console.log(this.state.user)
   }
 
   swipeRightCard(){
@@ -70,15 +81,9 @@ class SubmitView extends Component {
     card.addEventListener("animationend", this.removeClass.bind(this) , false);
   }
 
-  sendToPlayer(){
-    var val = document.getElementById('test-input').value;
-    this.user.sendCardToPlayer(val);
-  }
-
-  componentDidMount(){
-    this.setState({user: this.user})
-    this.props.updateUser(this.state.user);
-  }
+  //============================================================================
+  //=== Render/HTML ============================================================
+  //============================================================================
 
   render() {
     return (
