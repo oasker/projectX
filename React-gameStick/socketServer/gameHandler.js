@@ -31,7 +31,7 @@ class Game {
 
 class GameManager {
   constructor() {
-    this.roomCodes = {}
+    this.nameSpaces = {}
   }
   getNewRoomCode() {
     var code = Array.from(Array(5)).map(() => {
@@ -53,7 +53,7 @@ class GameManager {
   }
 
   roomCodeIsUnique(key) {
-    return !(key in this.roomCodes);
+    return !(key in this.nameSpaces);
   }
 
   getRoomCode() {
@@ -61,7 +61,7 @@ class GameManager {
   }
 
   addRoom(roomCode) {
-    this.roomCodes[roomCode] = {
+    this.nameSpaces[roomCode] = {
       game: new Game(roomCode),
       lastUsed: new Date().getTime()
     };
@@ -69,10 +69,10 @@ class GameManager {
   }
 
   getRoomCodeById(id) {
-    return this.roomCodes[id]
+    return this.nameSpaces[id]
   }
   roomCodeExists(roomCode) {
-    return roomCode in this.roomCodes;
+    return roomCode in this.nameSpaces;
   }
 
 }

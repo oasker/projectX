@@ -10,14 +10,6 @@ body{
     background: white;
 }
 
-button.bottom {
-  width: 100%;
-  padding: 10px;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-  -webkit-border-radius: 0;
-}
-
 .white-text{
   color: white;
 }
