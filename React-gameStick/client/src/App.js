@@ -3,8 +3,8 @@ import io from 'socket.io-client';
 
 import './App.css';
 
-import SubmitView from './pages/mainView/submitView';
-import PickingView from './pages/mainView/pickingView';
+import SubmitView from './pages/submitview/submitView';
+import PickingView from './pages/pickingview/pickingView';
 import LandingPage from './pages/landingpage/landingPage'
 import User from './pages/User';
 

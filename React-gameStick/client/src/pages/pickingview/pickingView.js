@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import StatusBar from './statusbar/statusBar.js';
-import Card from './cardModule/cardModule.js';
+import StatusBar from './../modules/statusbar/statusBar.js';
+import Card from './../modules/cardModule/cardModule.js';
 import './pickingView.css';
 
 // White Card and Black Card will be absracted out later

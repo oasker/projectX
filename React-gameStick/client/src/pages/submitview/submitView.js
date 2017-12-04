@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Swipe from 'react-swipe-component';
-import StatusBar from './statusbar/statusBar.js';
+import StatusBar from './../modules/statusbar/statusBar.js';
 
 class SubmitView extends Component {
 
@@ -97,7 +97,7 @@ class SubmitView extends Component {
         <Swipe onSwipedLeft={ this.onSwipeLeft } onSwipedRight={ this.onSwipeRight }>
           <div id="blackCard" className="black-card-container black-card">
             <h3 id="blackCardLabel">{ this.state.user.deck.currentBlackCard }</h3>
-            <img alt='none' id="logo" className="logo" src={ require("./imgs/blackLogo.PNG") }></img>
+            <img alt='none' id="logo" className="logo" src={ require("./../imgs/blackLogo.PNG") }></img>
           </div>
         </Swipe>
 

@@ -24,7 +24,7 @@ class Deck {
   getRandomVar() {
     return Math.floor(Math.random() * this.deck.length);
   };
-  
+
 }
 
 
