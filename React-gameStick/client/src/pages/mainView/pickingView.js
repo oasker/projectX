@@ -11,7 +11,6 @@ class Mainview extends Component {
     this.props = props;
     this.deck = this.props.user.deck;
     this.user = this.props.user;
-<<<<<<< HEAD
     this.setUpSocketEventHandlers();
   }
 
@@ -41,8 +40,6 @@ class Mainview extends Component {
     this.user.socket.on("userRecievedCard", msg =>{
       this.cardRecived(msg);
     })
-=======
->>>>>>> mainViewChange
   }
 
   componentDidMount(){
