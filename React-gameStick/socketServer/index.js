@@ -1,41 +1,13 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
 http.listen(4000, () => {
   console.log('listening on *:4200');
 });
-<<<<<<< HEAD
-
-var gameHandler = require('./gameHandler.js');
-var decks = require('./serverSideCard.js');
-
-class Game {
-  constructor() {
-    this.decks = decks;
-    this.users = [];
-    this.isPicking = {};
-    this.cardsOnTable = [];
-  }
-  addUser(user) {
-    this.users.push(user);
-  }
-  isPickingNow(user) {
-    this.isPicking.userName = user.userName;
-    this.isPicking.socketID = user.socketID;
-  }
-  addCardToTable(card){
-    this.cardsOnTable.push(card);
-  }
-}
-
-let game = new Game();
-=======
 //==============================================================================
 //==== Server Stuff ============================================================
 //==============================================================================
 
->>>>>>> mainViewChange
 
 app.use(require('express').static('public'));
 
@@ -58,11 +30,6 @@ var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
 
 
 io.on('connection', function(socket) {
-<<<<<<< HEAD
-  // initiate game
-  console.log(game.users);
-  
-=======
   //============================================================================
   //==== Starting/Joining Game =================================================
   //============================================================================
@@ -86,7 +53,6 @@ io.on('connection', function(socket) {
     socket.emit('newRoomCode' , { roomCode : code } )
   })
 
->>>>>>> mainViewChange
   socket.on('addUserName', (msg) => {
     if (gameHandler.gameusers.length === 0) {
       gameHandler.gameisPicking = {
@@ -99,11 +65,7 @@ io.on('connection', function(socket) {
       userName: msg,
       socket: socket.id
     })
-<<<<<<< HEAD
-    socket.emit("whoseTurnIsIt", game.isPicking.userName )
-=======
     socket.emit("whoseTurnIsIt", gameHandler.gameisPicking.userName )
->>>>>>> mainViewChange
     });
 
   socket.on('getDeck', (msg) => {
