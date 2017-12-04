@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 http.listen(4000, () => {
   console.log('listening on *:4200');
 });
+<<<<<<< HEAD
 
 var gameHandler = require('./gameHandler.js');
 var decks = require('./serverSideCard.js');
@@ -29,62 +30,117 @@ class Game {
 }
 
 let game = new Game();
+=======
+//==============================================================================
+//==== Server Stuff ============================================================
+//==============================================================================
+
+>>>>>>> mainViewChange
 
 app.use(require('express').static('public'));
-var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/html.html');
 });
 
+//==============================================================================
+//==== Cards Stuff =============================================================
+//==============================================================================
+
+
+var gameHandler = require('./gameHandler.js');
+var Game = require('./game.js')
+var decks = require('./serverSideCard.js');
+var currentWhiteCard = decks.whiteCardDeck.getCardFromDeck();
+//==============================================================================
+//==== Socket Stuff ============================================================
+//==============================================================================
+
+
 io.on('connection', function(socket) {
+<<<<<<< HEAD
   // initiate game
   console.log(game.users);
   
+=======
+  //============================================================================
+  //==== Starting/Joining Game =================================================
+  //============================================================================
+
+  socket.on('joinGame',(msg)=>{
+    console.log(msg.roomCode.toUpperCase())
+    console.log(msg)
+    if(gameHandler.roomCodeExists(msg.roomCode.toUpperCase())){
+      gameHandler.roomCodes[msg.roomCode.toUpperCase()].game.addUser({userName : msg.userName , socket : socket.id });
+    } else {
+      socket.emit("err","room Code doesn't Exists");
+    }
+  })
+
+  socket.on('startNewGame', msg => {
+    console.log(msg)
+    var code = gameHandler.getNewRoomCode();
+    gameHandler.addRoom(code)
+    gameHandler.roomCodes[code].game.isPicking = { userName : msg.userName , socket : socket.id }
+    gameHandler.roomCodes[code].game.addUser({ userName : msg.userName , socket : socket.id })
+    socket.emit('newRoomCode' , { roomCode : code } )
+  })
+
+>>>>>>> mainViewChange
   socket.on('addUserName', (msg) => {
-    if (game.users.length === 0) {
-      game.isPicking = {
+    if (gameHandler.gameusers.length === 0) {
+      gameHandler.gameisPicking = {
         userName: msg,
         socket: socket.id
       };
       socket.emit('youArePicking');
     }
-    game.addUser({
+    gameHandler.gameaddUser({
       userName: msg,
       socket: socket.id
     })
+<<<<<<< HEAD
     socket.emit("whoseTurnIsIt", game.isPicking.userName )
+=======
+    socket.emit("whoseTurnIsIt", gameHandler.gameisPicking.userName )
+>>>>>>> mainViewChange
     });
 
-  socket.on('fillDeck', (msg) => {
+  socket.on('getDeck', (msg) => {
     var x = [];
     for (var i = 0; i < 7; i++) {
       x.push(decks.blackCardDeck.getCardFromDeck())
     }
-    socket.emit("filledDeck", x);
+    socket.emit("newDeck", x);
   });
 
-  socket.emit('whiteCard', currentWhiteCard);
+  socket.emit('newWhiteCard', currentWhiteCard);
 
-  // send cards to users
+  //============================================================================
+  //==== Game In progress Game =================================================
+  //============================================================================
+
+  socket.on('startGame',()=>{
+    console.log('startGame')
+    socket.emit('gameHasStarted');
+    socket.broadcast.emit('gameHasStarted');
+    socket.emit("test","test")
+  })
 
   socket.on("submitCard", (msg) => {
-    console.log(`recived card ${msg.blackCard} from ${ msg.userName } whoose socket is ${ msg.socket }`);
-    game.addCardToTable(msg); // add cards to table.
-    socket.to(game.isPicking.socket).emit("userSentCard", msg);
+    console.log(gameHandler.roomCodes[msg.roomCode].game)
+    gameHandler.roomCodes[msg.roomCode].game.addCardToTable(msg.card);
+    socket.to(gameHandler.roomCodes[msg.roomCode].game.isPicking.socket).emit("userSentCard", msg);
   })
 
-  socket.on('getBlackCard', (msg) => { socket.emit('card', decks.blackCardDeck.getCardFromDeck())});
+  socket.on('getBlackCard', (msg) => { socket.emit('newBlackCard', decks.blackCardDeck.getCardFromDeck())});
 
-  socket.on('getWhiteCard', () => socket.emit('whiteCard', currentWhiteCard))
+  socket.on('getWhiteCard', () => socket.emit('newWhiteCard', currentWhiteCard))
 
-  // recived cards from user
+  //============================================================================
+  //==== Testing ===============================================================
+  //============================================================================
 
-  socket.on('userChooseCard', () => {
-    // add point to the user whose card was chosen,
-    // send a notification to the user whos card was chosen
-    // send a starting flag to the next user
-  })
 
   socket.on("test", (msg) => {
     msg = JSON.parse(msg);
@@ -92,9 +148,16 @@ io.on('connection', function(socket) {
     socket.to(msg.user).emit("testR", msg.text);
   })
 
-  // Game ends
+  //============================================================================
+  //==== Game Ended ============================================================
+  //============================================================================
+
   socket.on('disconnect', () => {
+    // remove from room
     console.log('user disconnected');
   });
 
+  socket.on('getGameCode',(id)=>{
+    socket.emit('game',gameHandler.getRoomCodeById(id));
+  })
 });

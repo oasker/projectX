@@ -56,55 +56,89 @@ class Deck {
       var x = new Card(i, ar[i]); // get a black card
       this.insertCard(x);
     }
-    this.currentBlackCard=this.blackCards[0].label;
+    this.currentBlackCard = this.blackCards[0].label;
   }
 }
 
 export default class User {
   constructor(socket){
-    this.id = 0;
+    this.id = socket.id;
     this.userName = "Jeff";
     this.deck = new Deck();
     this.cardsEarned = 0;
     this.whiteCards = 0;
     this.isPickingCards = false;
     this.socket = socket;
-    this.setUpSocket()
-    this.requestDeck();
+    this.roomCode = "";
+    this.setUpSocketListners();
+    this.initGame();
   }
 
-  setUpSocket(){
+  // At begining of game
 
+  joinGame(roomCode){
+    this.socket.emit('joinGame', { userName : this.userName, roomCode : roomCode })
   }
 
-  //fillHand(ar)
+  startNewGame(){
+    console.log("starting new game")
+    this.socket.emit("startNewGame", { userName : this.userName })
+  }
 
-  requestDeck(){
-      this.socket.emit("fillDeck");
-      this.socket.emit("getWhiteCard");
+  initGame(){
+    this.socket.emit("getDeck");
+    this.socket.emit("getWhiteCard");
+  }
+
+  setUpSocketListners(){
+    this.socket.on("test",(msg)=>{
+      console.log(msg)
+    })
+
+    this.socket.on("newBlackCard",(msg)=>{
+      console.log(msg)
+      this.deck.blackCards[this.deck.ind].label = msg;
+      this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
+    });
+
+
+    this.socket.on("userRecievedCard", msg =>{
+      this.cardRecived(msg);
+    })
+
+    this.socket.on("userSentCard", msg =>{
+      console.log(`Recived Card ${ msg.blackCard } form ${ msg.userName } with SocketID = ${ msg.socket }`);
+      // add card to cardsRecived
+
+      // Show cards on the thing
+    })
+
+    this.socket.on("whoseTurnIsIt", msg =>{
+      this.user.turn = (this.user.userName === msg )?("my"):(msg);
+    })
+
+    this.socket.on('newRoomCode', msg =>{
+      this.roomCode = msg.roomCode;
+    })
+
+    this.socket.on("err",(msg)=>{
+      console.log(msg)
+    })
+  }
+
+  // during game;
+
+  sendCardToPlayer(){
+    this.socket.emit('submitCard',{ card : this.deck.currentBlackCard , roomCode : this.roomCode });
   }
 
   getBlackCard(){
     this.socket.emit('getBlackCard');
   }
 
-  //Choosing Black Cards
-
-  submitCardToTable() {
-    console.log('Here')
-    this.socket.emit('submitCard',this.deck.blackCards[this.deck.ind]);
+  sendChoosenCard(card){
+    // card will have user and socket info;
+    this.socket.emit('winningCardChosen', { cardChosen : card })
   }
-
-  // White Card Stuff
-
-  pickWhiteCard(){
-    // If is picking == true;
-    if(this.isPickingCards){
-        this.socket.emit("cardChosen",/* Some Card cardChosen */)
-    } else {
-      return
-    }
-  }
-
 
 }

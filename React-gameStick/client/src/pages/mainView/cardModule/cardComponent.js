@@ -21,7 +21,6 @@ class Mainview extends Component {
   render() {
     return (
       <div>
-        { yea a card }
       </div>
     );
   }
