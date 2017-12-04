@@ -22,11 +22,6 @@ class SubmitView extends Component {
     this.setUpSocketListners();
   }
 
-  componentDidMount(){
-    this.setState({user : this.user})
-    this.props.updateUser(this.state.user);
-  }
-
   setUpSocketListners(){
     this.socket.on("newDeck", msg =>{
       this.deck.fillHand(msg);
@@ -46,7 +41,7 @@ class SubmitView extends Component {
   }
 
   //============================================================================
-  //=== UI/Visual ==============================================================
+  //=== Setup ==================================================================
   //============================================================================
 
   removeClass(event){
@@ -81,8 +76,13 @@ class SubmitView extends Component {
     card.addEventListener("animationend", this.removeClass.bind(this) , false);
   }
 
+  componentDidMount(){
+    this.setState({user: this.user})
+    this.props.updateUser(this.state.user);
+  }
+
   //============================================================================
-  //=== Render/HTML ============================================================
+  //=== Setup ==================================================================
   //============================================================================
 
   render() {
