@@ -3,7 +3,9 @@ import StatusBar from './statusbar/statusBar.js';
 import Card from './cardModule/cardComponent.js';
 import './pickingView.css';
 
-class Mainview extends Component {
+// White Card and Black Card will be absracted out later
+
+class PickingView extends Component {
 
   constructor(props){
     super();
@@ -35,4 +37,4 @@ class Mainview extends Component {
   }
 }
 
-export default Mainview;
+export default PickingView;
