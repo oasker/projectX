@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Swipe from 'react-swipe-component';
 import StatusBar from './../modules/statusbar/statusBar.js';
+import './submitView.css';
 
 class SubmitView extends Component {
 

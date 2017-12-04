@@ -1,0 +1,200 @@
+ul.cards-submitted-list {
+  width: 75%;
+  position: fixed;
+  right: 12.5%;
+  top: 2%;
+  text-align: center;
+  list-style: none;
+}
+
+li.card-submitted-title-container {
+  background: black;
+  color: white;
+  border-radius: 10px;
+  padding: 5%;
+  margin: 2%;
+}
+
+li.card-submitted-title-container-white {
+  background: white;
+  border: 1px solid black;
+  color: black;
+  border-radius: 10px;
+  padding: 5%;
+  margin: 2%;
+}
+
+
+/* ===========================================================================*/
+/* === Animations ============================================================*/
+/* ===========================================================================*/
+
+
+
+
+/* ===========================================================================*/
+/* === Cards =================================================================*/
+/* ===========================================================================*/
+
+img.logo {
+  width: 80%;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  left: 20px;
+  border-radius: 75px;
+  overflow: hidden;
+}
+
+img#logInLogo{
+  overflow: hidden;
+  height: 10%;
+}
+
+
+.white-text{
+  color: white;
+}
+
+/* Gloabal Classes
+/* Card View */
+
+.black-card-container {
+  position: fixed;
+  left: calc((100% - (80vh/2))/2);
+  top: 30%;
+  height: 60vh;
+  width: calc(80vh/2);
+  border-radius: 50px;
+  box-shadow: darkgray 10px 10px;
+  background: white;
+  color: black;
+  overflow: hidden;
+}
+
+.white-card-container{
+  position: fixed;
+  left: calc((100% - (80vh/2))/2);
+  top: 10%;
+  height: 15vh;
+  width: calc(80vh/2);
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: darkgray 10px 10px;
+  background: white;
+  color: black;
+  overflow: hidden;
+}
+
+#whiteCardLabel {
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+#blackCardLabel {
+  position: relative;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 15%;
+}
+
+.black-card {
+  background: rgb(35, 31, 32);
+  color: white;
+}
+
+.white-card {
+  background: rgb(255, 255, 255);
+  color: black;
+}
+
+/* ===========================================================================*/
+/* === Animations ============================================================*/
+/* ===========================================================================*/
+
+div.card-left-transition{
+    -webkit-animation-name: left-trans; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: .7s; /* Safari 4.0 - 8.0 */
+    animation-name: left-trans;
+    animation-duration: .7s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes left-trans {
+  25%  {right : 1000px }
+  50%  {
+    left : -100px;
+  }
+  100% {
+    left : calc((100% - (80vh/2))/2));
+  }
+}
+
+/* Standard syntax */
+@keyframes left-trans {
+  50%  {
+    left : -1000px;
+  }
+  100% {
+    right : calc((100% - (80vh/2))/2));
+  }
+}
+
+div.card-right-transition{
+    -webkit-animation-name: right-trans; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: .7s; /* Safari 4.0 - 8.0 */
+    animation-name: right-trans;
+    animation-duration: .7s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes right-trans {
+  50%  {
+    right : -1000px;
+  }
+  100% {
+    right : calc(-1*(100% - (80vh/2))/2));
+
+  }
+}
+
+/* Standard syntax */
+@keyframes right-trans {
+  50%  {
+    left : 1000px;
+    color: red;
+  }
+  100% {
+    right : calc(-1*(100% - (80vh/2))/2));
+  }
+}
+
+div.on-swipe-up {
+  -webkit-animation-name: up-trans; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: .7s; /* Safari 4.0 - 8.0 */
+  animation-name: up-trans;
+  animation-duration: .7s;
+}
+
+@-webkit-keyframes up-trans {
+  50%  {
+    top : -1000px;
+  }
+  100% {
+    top : 30%;
+
+  }
+}
+
+/* Standard syntax */
+@keyframes up-trans {
+  50%  {
+    top : -1000px;
+  }
+  100% {
+    top : 30%;
+
+  }
+}
