@@ -7,24 +7,22 @@ class GameChoice extends Component {
   }
 
   checkUserName(){
-    var userName = document.getElementById('userName');
+    var userName = document.getElementById('userNameInput');
     if(userName.value !== ""){
       return true;
     } else {
       userName.style.border = "2px solid red";
       return false;
     }
-    console.log("test")
   }
 
   render() {
     return (
         <div className="text-center">
+          <button className="btn" onClick = { ()=>{ if(this.checkUserName){ this.props.setJoinGameComponent() } } } >Join Game</button>
+
           <br/>
-          <button className="btn" onClick = { ()=>{ if(this.checkUserName){ this.props.joinGameView() } } } >Join Game</button>
-          <br/>
-          <br/>
-          <button className="btn" onClick = { ()=>{ if(this.checkUserName){ this.props.startGameView() } } } >Start New Game</button>
+          <button className="btn" onClick = { ()=>{ if(this.checkUserName){ this.props.setStartGameComponent() } } } >Start New Game</button>
         </div>
     );
   }

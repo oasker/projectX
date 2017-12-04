@@ -82,11 +82,17 @@ io.on('connection', function(socket) {
   //==== Game In progress Game =================================================
   //============================================================================
 
+  socket.on('startGame',()=>{
+    console.log('startGame')
+    socket.emit('gameHasStarted');
+    socket.broadcast.emit('gameHasStarted');
+    socket.emit("test","test")
+  })
 
   socket.on("submitCard", (msg) => {
-    console.log(`recived card ${msg.blackCard} from ${ msg.userName } whoose socket is ${ msg.socket }`);
-    gameHandler.gameaddCardToTable(msg);
-    socket.to(gameHandler.gameisPicking.socket).emit("userSentCard", msg);
+    console.log(gameHandler.roomCodes[msg.roomCode].game)
+    gameHandler.roomCodes[msg.roomCode].game.addCardToTable(msg.card);
+    socket.to(gameHandler.roomCodes[msg.roomCode].game.isPicking.socket).emit("userSentCard", msg);
   })
 
   socket.on('getBlackCard', (msg) => { socket.emit('newBlackCard', decks.blackCardDeck.getCardFromDeck())});

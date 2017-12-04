@@ -14,7 +14,27 @@ class SubmitView extends Component {
     this.deck = this.props.user.deck;
     this.user = this.props.user;
     this.socket = this.user.socket;
-    this.setUpSocketEventHandlers();
+    this.user.initGame();
+    this.setUpSocketListners();
+  }
+
+  setUpSocketListners(){
+    this.socket.on("newDeck", msg =>{
+      this.deck.fillHand(msg);
+      console.log(msg)
+      this.props.updateUser(this.user);
+      this.setState({user : this.user})
+    });
+    this.socket.on("newWhiteCard", msg => {
+      this.deck.whiteCard = msg;
+      this.props.updateUser(this.user);
+      this.setState({user : this.user})
+    });
+    this.socket.on("youArePicking",(msg)=>{
+      this.isPicking = true;
+      this.props.updateUser(this.user)
+      this.setState({user : this.user})
+    });
   }
 
   removeClass(e){
@@ -24,10 +44,12 @@ class SubmitView extends Component {
     } else if(target.className.includes("left")){
       this.deck.getPreviousCard();
     } else if(target.className.includes("up")){
-      this.submitCardToTable();
+      this.user.sendCardToPlayer();
     }
     target.className = "black-card-container black-card";
     this.props.updateUser(this.user);
+    this.setState({user : this.user})
+    console.log(this.state.user)
   }
 
   swipeRightCard(){
@@ -54,7 +76,8 @@ class SubmitView extends Component {
   }
 
   componentDidMount(){
-    this.props.updateUser(this.user)
+    this.setState({user: this.user})
+    this.props.updateUser(this.state.user);
   }
 
   render() {
@@ -74,7 +97,7 @@ class SubmitView extends Component {
         </Swipe>
 
         <div className="bottom-control bottom">
-          <button onClick={ this.onSwipeUp }>Submit Card</button>
+          <button onClick={ this.onSwipeUp }>Submitss Card</button>
         </div>
       </div>
     );

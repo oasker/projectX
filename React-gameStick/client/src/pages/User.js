@@ -56,7 +56,7 @@ class Deck {
       var x = new Card(i, ar[i]); // get a black card
       this.insertCard(x);
     }
-    this.currentBlackCard=this.blackCards[0].label;
+    this.currentBlackCard = this.blackCards[0].label;
   }
 }
 
@@ -77,7 +77,6 @@ export default class User {
   // At begining of game
 
   joinGame(roomCode){
-    console.log(roomCode)
     this.socket.emit('joinGame', { userName : this.userName, roomCode : roomCode })
   }
 
@@ -92,26 +91,16 @@ export default class User {
   }
 
   setUpSocketListners(){
-    this.socket.on("newDeck", msg =>{
-      this.deck.fillHand(msg);
-      //this.props.updateUser(this.user);
-    });
-
-    this.socket.on("newWhiteCard", msg => {
-      this.deck.whiteCard = msg;
-      //this.props.updateUser(this.user);
-    });
+    this.socket.on("test",(msg)=>{
+      console.log(msg)
+    })
 
     this.socket.on("newBlackCard",(msg)=>{
+      console.log(msg)
       this.deck.blackCards[this.deck.ind].label = msg;
       this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
     });
 
-    this.socket.on("youArePicking",(msg)=>{
-      console.log("I am picking");
-      this.isPicking = true;
-      //this.props.updateUser(this.user)
-    });
 
     this.socket.on("userRecievedCard", msg =>{
       this.cardRecived(msg);
@@ -128,7 +117,7 @@ export default class User {
       this.user.turn = (this.user.userName === msg )?("my"):(msg);
     })
 
-    this.socket.on('newRoomfCode', msg =>{
+    this.socket.on('newRoomCode', msg =>{
       this.roomCode = msg.roomCode;
     })
 
@@ -139,8 +128,8 @@ export default class User {
 
   // during game;
 
-  sendCardToPlayer(val){
-    this.socket.emit('submitCard',{ card : val , roomCode : this.roomCode });
+  sendCardToPlayer(){
+    this.socket.emit('submitCard',{ card : this.deck.currentBlackCard , roomCode : this.roomCode });
   }
 
   getBlackCard(){

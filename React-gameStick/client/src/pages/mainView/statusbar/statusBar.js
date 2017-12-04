@@ -5,18 +5,26 @@ class StatusBar extends Component {
   constructor(props){
     super();
     this.user = props.user;
+    this.userName = '';
+    this.cardWon = '';
+    this.turn = '';
+    this.junk = '';
   }
 
   componentDidMount(){
+    // this.userName = this.user.userName;
+    // this.cardWon = this.user.cardsEarned;
+    // this.turn = this.user.turn;
+    // this.junk = this.user.junk;
   }
 
   render() {
     return (
         <ul className="status-bar">
-          <li className="sb-list">User : { this.user.userName }</li>
-          <li className="sb-list">Cards Won : { this.user.whiteCards }</li>
-          <li className="sb-list">It is { this.user.turn }s  turn</li>
-          <li className="sb-list">{ this.user.userName }</li>
+          <li className="sb-list">User : { this.userName } </li>
+          <li className="sb-list">Cards Won :{ this.cardWon } </li>
+          <li className="sb-list">It is { this.turn }</li>
+          <li className="sb-list"> { this.junk }</li>
         </ul>
     );
   }
