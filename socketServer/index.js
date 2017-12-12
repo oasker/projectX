@@ -72,10 +72,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('getDeck', msg => {
-    var x = [];
-    for (var i = 0; i < 7; i++) {
-      x.push(decks.blackCardDeck.getCardFromDeck())
-    }
+    var x =  Array.from(Array(7)).map(()=>{ return decks.blackCardDeck.getCardFromDeck() });
     socket.emit("newDeck", x);
   });
 
@@ -91,7 +88,6 @@ io.on('connection', function(socket) {
   })
 
   socket.on("submitCard", (msg) => {
-    console.log(gameHandler.nameSpaces[msg.roomCode].game);
     gameHandler.nameSpaces[msg.roomCode].game.addCardToTable(msg.card);
     socket.to(gameHandler.nameSpaces[msg.roomCode].game.isPicking.socket).emit("userSentCard", msg);
   })
