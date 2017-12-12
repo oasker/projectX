@@ -2,7 +2,6 @@
 // === Game ====================================================================
 // =============================================================================
 
-
 class Game {
   constructor(id) {
     this.decks = [];
@@ -21,18 +20,17 @@ class Game {
   addCardToTable(card) {
     this.cardsOnTable.push(card);
   }
-
 }
 
 // =============================================================================
 // === Game Manager ============================================================
 // =============================================================================
 
-
 class GameManager {
   constructor() {
     this.nameSpaces = {}
   }
+
   getNewRoomCode() {
     var code = Array.from(Array(5)).map(() => {
       return this.randomNumber()
@@ -71,12 +69,12 @@ class GameManager {
   getRoomCodeById(id) {
     return this.nameSpaces[id]
   }
+
   roomCodeExists(roomCode) {
     return roomCode in this.nameSpaces;
   }
 
 }
-
 
 module.export = new Game()
 module.exports = new GameManager();
