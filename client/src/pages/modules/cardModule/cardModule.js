@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Swipe from 'react-swipe-component';
 import './cardComponent.css';
 class cardModule extends Component {
 
   constructor(props){
     super(props);
   }
+
   componentDidMount(){
-    console.log(this.props.user)
   }
 
   componentWillMount(){
@@ -18,9 +17,7 @@ class cardModule extends Component {
     console.log(`This card is ${this.props.card.card} , from user ${this.props.card.userName}`)
     this.props.user.socket.emit("pickedCard",this.props.card)
   }
-
-
-
+  
   render() {
     return (
       <div className = "card-module" onClick={ this.chooseCard.bind(this) }>

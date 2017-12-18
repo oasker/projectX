@@ -3,21 +3,31 @@ import GameChoice from './gamechoice/gameChoice.js';
 import UserName  from './gamechoice/userName.js';
 import './landingPage.css';
 
+/*
+  Landing Page contains:
+    -
+*/
+
 class LandingPage extends Component {
+  
   constructor(props){
     super(props);
-    this.userNameField;
-    this.gameCodeField;
   }
 
   componentWillMount(){
-    this.setState({ view : <GameChoice setJoinGameComponent = { this.setJoinGameComponent.bind(this)} setStartGameComponent = {this.setStartGameComponent.bind(this)} user = { this.props.user }/> })
+    this.setGameChoice();
   }
 
   componentDidMount(){
     this.setState({user : this.props.user });
-    this.userNameField = document.getElementById('userNameInput');
-    this.gameCodeField = document.getElementById('gameCodeField');
+  }
+
+  //============================================================================
+  //=== Start New Game =========================================================
+  //============================================================================
+
+  setGameChoice(){
+    this.setState({ view : <GameChoice setJoinGameComponent = { this.setJoinGameComponent.bind(this)} setStartGameComponent = {this.setStartGameComponent.bind(this)} user = { this.props.user }/> })
   }
 
   //============================================================================
@@ -27,6 +37,8 @@ class LandingPage extends Component {
   startGameComponent(){
     return (
       <div>
+        <button className='btn' onClick={ ()=>{ this.setGameChoice() } }>Back</button>
+        <UserName/>
         <h4>Your Room Code is</h4>
         <h6>{ this.state.user.roomCode }</h6>
         <button onClick={ ()=>{ this.initGame() } } className="btn"> Everyone has started. </button>
@@ -53,6 +65,8 @@ class LandingPage extends Component {
   joinGameComponent(){
     return (
       <div>
+        <button className='btn' onClick={ ()=>{ this.setGameChoice() } }>Back</button>
+        <UserName/>
         <p>Enter Room Code</p>
         <input id='joinGameRoomCode' placeholder="Enter Room Code Here" className="landing-page-roomcode-input" type="text"></input>
         <br/>
@@ -62,22 +76,19 @@ class LandingPage extends Component {
   }
 
   setJoinGameComponent(){
-    this.setState( { view : this.joinGameComponent() } )
-  }
-
-  getRoomCodeVal(){
-    return document.getElementById('joinGameRoomCode').value;
+    this.setState({ view : this.joinGameComponent() });
   }
 
   joinGameInit(){
-    this.setUserName();
-    this.setRoomCode();
-    if( this.userNameIsSet()){
-      this.setUserName();
+    if( this.userNameIsSet()&&this.roomCodeIsSet()){
       this.props.user.joinGame(this.getRoomCodeVal());
-      this.initGame();
     } else {
-      alert("Set UserName First You Fucking Idiot");
+      if(!this.userNameIsSet()){
+        alert("Set Username First You Fucking Idiot");
+      }
+      if(!this.roomCodeIsSet()){
+        alert("Set Room First You Fucking Idiot");
+      }
     }
   }
 
@@ -96,8 +107,14 @@ class LandingPage extends Component {
   }
 
   setUserName(){
-    this.props.user.userName = document.getElementById('userNameInput').value;
-    this.setState({user : this.props.user});
+    var uN = document.getElementById('userNameInput').value;
+    if (uN !== "") {
+      this.props.user.userName = uN
+      this.setState({user : this.props.user});
+    } else {
+      console.log("NULL VALUE");
+      document.getElementById('userNameInput').style.border = "1px solid red";
+    }
   }
 
   setRoomCode(){
@@ -105,13 +122,24 @@ class LandingPage extends Component {
     this.setState({user : this.props.user })
   }
 
+  roomCodeIsSet(){
+    var rC = document.getElementById("joinGameRoomCode").value;
+    if(rC !== ""){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getRoomCodeVal(){
+    return document.getElementById('joinGameRoomCode').value;
+  }
 
   render() {
     return (
       <div className="landing-page-main-content">
         <div className="landing-page-pop-up text-center container">
           <h1>Cards Against Hummanity</h1>
-          <UserName/>
           <br/>
           {
             this.state.view
