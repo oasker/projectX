@@ -20,6 +20,7 @@ class App extends Component {
     this.user = new User(socket)
     this.view = <LandingPage user = { this.user }/>
   }
+
   updateUser(user) {
     this.setState({user : user});
   }
@@ -48,7 +49,7 @@ class App extends Component {
       this.setUI();
     })
     this.user.socket.on("cardPicked",(msg)=>{
-      console.log("the user picked",msg)
+      console.log("the user picked", msg)
     })
   }
 

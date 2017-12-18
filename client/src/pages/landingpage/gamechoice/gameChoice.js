@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
-class GameChoice extends Component {
-  constructor(props){
-    super(props);
-    this.props = props;
-    this.state = this.props;
-  }
+import Button from "./../../modules/components/button.js";
 
+export default class GameChoice extends Component {
   render() {
     return (
-        <div className="text-center">
-          <button className="btn" onClick = { ()=>{ this.props.setJoinGameComponent() } } >Join Game</button>
-          <br/>
-          <br/>
-          <button className="btn" onClick = { ()=>{ this.props.setStartGameComponent() } } >Start New Game</button>
+        <div>
+          <Button label="Join Game" fn = { this.props.setJoinGameComponent.bind(this) }/>
+          <Button label="New Game" fn = { this.props.setStartGameComponent.bind(this) }/>
         </div>
     );
   }
 }
-
-export default GameChoice;

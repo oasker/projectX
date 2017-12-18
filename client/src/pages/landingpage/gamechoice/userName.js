@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
-class UserName extends Component {
+export default class UserName extends Component {
   render() {
     return (
         <div className="text-center">
-          <h6>Enter Username : <input className='landing-page-input'  id='userNameInput' placeholder="Enter Username" ></input></h6>
+          <input name="userName" className='landing-page-input'  id='userNameInput' placeholder="Enter Username" />
         </div>
     );
   }
 }
-
-export default UserName;

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import GameChoice from './gamechoice/gameChoice.js';
 import UserName  from './gamechoice/userName.js';
+import Button from './../modules/components/button.js';
+
 import './landingPage.css';
 
 /*
   Landing Page contains:
-    -
+    - 
 */
 
-class LandingPage extends Component {
-  
+export default class LandingPage extends Component {
+
   constructor(props){
     super(props);
   }
@@ -37,11 +39,11 @@ class LandingPage extends Component {
   startGameComponent(){
     return (
       <div>
-        <button className='btn' onClick={ ()=>{ this.setGameChoice() } }>Back</button>
+        <Button label = "Back" fn = { this.setGameChoice.bind(this) }/>
         <UserName/>
         <h4>Your Room Code is</h4>
         <h6>{ this.state.user.roomCode }</h6>
-        <button onClick={ ()=>{ this.initGame() } } className="btn"> Everyone has started. </button>
+        <button label = "Everyone has started" fn = { this.initGame.bind(this) }/>
       </div>
     )
   }
@@ -65,12 +67,10 @@ class LandingPage extends Component {
   joinGameComponent(){
     return (
       <div>
-        <button className='btn' onClick={ ()=>{ this.setGameChoice() } }>Back</button>
+        <Button fn={ this.setGameChoice.bind(this) } label="Back" />
         <UserName/>
-        <p>Enter Room Code</p>
-        <input id='joinGameRoomCode' placeholder="Enter Room Code Here" className="landing-page-roomcode-input" type="text"></input>
-        <br/>
-        <button className="btn" onClick = { ()=>{ this.joinGameInit() } } >Join Room</button>
+        <input id='joinGameRoomCode' placeholder="Enter Room Code" className="landing-page-roomcode-input" type="text"/>
+        <Button fn = { this.joinGameInit.bind(this) } label="Join Room"/>
       </div>
     )
   }
@@ -149,5 +149,3 @@ class LandingPage extends Component {
     );
   }
 }
-
-export default LandingPage;
