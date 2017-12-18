@@ -56,7 +56,7 @@ class LandingPage extends Component {
         <p>Enter Room Code</p>
         <input id='joinGameRoomCode' placeholder="Enter Room Code Here" className="landing-page-roomcode-input" type="text"></input>
         <br/>
-        <button className="btn" onClick = { ()=>{  } } >Join Room</button>
+        <button className="btn" onClick = { ()=>{ this.joinGameInit() } } >Join Room</button>
       </div>
     )
   }
@@ -70,6 +70,8 @@ class LandingPage extends Component {
   }
 
   joinGameInit(){
+    this.setUserName();
+    this.setRoomCode();
     if( this.userNameIsSet()){
       this.setUserName();
       this.props.user.joinGame(this.getRoomCodeVal());
@@ -86,17 +88,23 @@ class LandingPage extends Component {
   initGame(){
     this.setUserName();
     this.props.user.socket.emit('getGameCode');//,this.state.user.roomCode);
-    this.props.user.socket.emit('startGame',this.state.user.roomCode);
+    this.props.user.socket.emit('startGame', { roomCode : this.state.user.roomCode });
   }
 
   userNameIsSet(){
-    return document.getElementById();
+    return this.props.userName !== '';
   }
 
   setUserName(){
-    this.props.user.userName = document.getElementById('userNameInput');
+    this.props.user.userName = document.getElementById('userNameInput').value;
     this.setState({user : this.props.user});
   }
+
+  setRoomCode(){
+    this.props.user.roomCode = document.getElementById("joinGameRoomCode").value;
+    this.setState({user : this.props.user })
+  }
+
 
   render() {
     return (

@@ -30,6 +30,7 @@ io.on('connection', function(socket) {
   //============================================================================
 
   socket.on('joinGame', msg => {
+    console.log("JOINING GAME WITH ROOM CODE ", msg)
     if (gameHandler.roomCodeExists(msg.roomCode.toUpperCase())) {
       gameHandler.nameSpaces[msg.roomCode.toUpperCase()].game.addUser({
         userName: msg.userName,
@@ -38,9 +39,12 @@ io.on('connection', function(socket) {
     } else {
       socket.emit("err", "room Code doesn't Exists"); // This does this
     }
+    console.log(msg)
+    console.log(gameHandler)
   })
 
   socket.on('startNewGame', msg => {
+    console.log("STARTING NEW GAME")
     var ns = gameHandler.getNewRoomCode();
     gameHandler.addRoom(ns);
     gameHandler.nameSpaces[ns].game.isPicking = {
@@ -51,12 +55,15 @@ io.on('connection', function(socket) {
       userName: msg.userName,
       socket: socket.id
     });
+    console.log('EMITING NEW ROOM');
     socket.emit('newRoomCode', {
       roomCode: ns
     });
+    console.log(gameHandler)
   })
 
   socket.on('addUserName', msg => {
+    console.log("ADDING USER NAME")
     if (gameHandler.users.length === 0) {
       gameHandler.gameisPicking = {
         userName: msg,
@@ -72,6 +79,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('getDeck', msg => {
+    console.log("getting Deck")
     var x =  Array.from(Array(7)).map(()=>{ return decks.blackCardDeck.getCardFromDeck() });
     socket.emit("newDeck", x);
   });
@@ -82,12 +90,16 @@ io.on('connection', function(socket) {
   //==== Game In progress Game =================================================
   //============================================================================
 
-  socket.on('startGame', () => {
+  socket.on('startGame', (msg) => {
+    console.log("STARTING GAME")
+    var isPicking = gameHandler.nameSpaces[msg.roomCode].game.isPicking.socket;
+    socket.to(isPicking).emit('isPicking')
     socket.emit('gameHasStarted');
     socket.broadcast.emit('gameHasStarted');
   })
 
   socket.on("submitCard", (msg) => {
+    console.log('Submit Card: Passed By User',msg)
     gameHandler.nameSpaces[msg.roomCode].game.addCardToTable(msg.card);
     socket.to(gameHandler.nameSpaces[msg.roomCode].game.isPicking.socket).emit("userSentCard", msg);
   })
@@ -97,6 +109,10 @@ io.on('connection', function(socket) {
   });
 
   socket.on('getWhiteCard', () => socket.emit('newWhiteCard', currentWhiteCard));
+
+  socket.on('pickedCard',(msg)=>{
+    socket.broadcast.emit('cardPicked',msg);
+  })
 
   //============================================================================
   //==== Testing ===============================================================

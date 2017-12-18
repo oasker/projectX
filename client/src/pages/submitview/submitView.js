@@ -15,7 +15,7 @@ class SubmitView extends Component {
     this.props = props;
     this.onSwipeLeft = this.swipeLeftCard.bind(this);
     this.onSwipeRight = this.swipeRightCard.bind(this);
-    this.onSwipeUp = this.swipeCardUp.bind(this);
+    this.onSwipeUp = this.submitCardButton.bind(this);
     this.deck = this.props.user.deck;
     this.user = this.props.user;
     this.socket = this.user.socket;
@@ -52,7 +52,7 @@ class SubmitView extends Component {
     } else if(target.className.includes("left")){
       this.deck.getPreviousCard();
     } else if(target.className.includes("up")){
-      this.user.sendCardToPlayer();
+      this.state.user.sendCardToPlayer();
     }
     target.className = "black-card-container black-card";
     this.props.updateUser(this.user);
@@ -65,7 +65,7 @@ class SubmitView extends Component {
     card.addEventListener("animationend", this.removeClass.bind(this) , false);
   }
 
-  swipeCardUp(){
+  submitCardButton(){
     var card = document.getElementById("blackCard");
     card.className += " on-swipe-up";
     card.addEventListener("animationend", this.removeClass.bind(this) , false);
@@ -81,6 +81,12 @@ class SubmitView extends Component {
     this.setState({user: this.user})
     this.props.updateUser(this.state.user);
   }
+
+  //============================================================================
+  //=== Game Actions ===========================================================
+  //============================================================================
+
+
 
   //============================================================================
   //=== Setup ==================================================================

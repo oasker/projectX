@@ -1,4 +1,4 @@
-ul.cards-submitted-list {
+.cards-submitted-list {
   width: 75%;
   position: fixed;
   right: 12.5%;
@@ -6,16 +6,14 @@ ul.cards-submitted-list {
   text-align: center;
   list-style: none;
 }
-
-li.card-submitted-title-container {
+.card-submitted-title-container {
   background: black;
   color: white;
   border-radius: 10px;
   padding: 5%;
   margin: 2%;
 }
-
-li.card-submitted-title-container-white {
+.card-submitted-title-container-white {
   background: white;
   border: 1px solid black;
   color: black;
@@ -110,91 +108,11 @@ img#logInLogo{
   color: black;
 }
 
-/* ===========================================================================*/
-/* === Animations ============================================================*/
-/* ===========================================================================*/
+.cards-to-choose{
+  position: absolute;
+  top: 30%;
+  width: calc(80vh/2);
+  left:calc((100% - (80vh/2))/2);
 
-div.card-left-transition{
-    -webkit-animation-name: left-trans; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: .7s; /* Safari 4.0 - 8.0 */
-    animation-name: left-trans;
-    animation-duration: .7s;
-}
 
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes left-trans {
-  25%  {right : 1000px }
-  50%  {
-    left : -100px;
-  }
-  100% {
-    left : calc((100% - (80vh/2))/2));
-  }
-}
-
-/* Standard syntax */
-@keyframes left-trans {
-  50%  {
-    left : -1000px;
-  }
-  100% {
-    right : calc((100% - (80vh/2))/2));
-  }
-}
-
-div.card-right-transition{
-    -webkit-animation-name: right-trans; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: .7s; /* Safari 4.0 - 8.0 */
-    animation-name: right-trans;
-    animation-duration: .7s;
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes right-trans {
-  50%  {
-    right : -1000px;
-  }
-  100% {
-    right : calc(-1*(100% - (80vh/2))/2));
-
-  }
-}
-
-/* Standard syntax */
-@keyframes right-trans {
-  50%  {
-    left : 1000px;
-    color: red;
-  }
-  100% {
-    right : calc(-1*(100% - (80vh/2))/2));
-  }
-}
-
-div.on-swipe-up {
-  -webkit-animation-name: up-trans; /* Safari 4.0 - 8.0 */
-  -webkit-animation-duration: .7s; /* Safari 4.0 - 8.0 */
-  animation-name: up-trans;
-  animation-duration: .7s;
-}
-
-@-webkit-keyframes up-trans {
-  50%  {
-    top : -1000px;
-  }
-  100% {
-    top : 30%;
-
-  }
-}
-
-/* Standard syntax */
-@keyframes up-trans {
-  50%  {
-    top : -1000px;
-  }
-  100% {
-    top : 30%;
-
-  }
 }

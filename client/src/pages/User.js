@@ -70,6 +70,7 @@ export default class User {
     this.isPickingCards = false;
     this.socket = socket;
     this.roomCode = "";
+    this.cardsRecived = [];
     this.setUpSocketListners();
     this.initGame();
   }
@@ -98,13 +99,12 @@ export default class User {
       this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
     });
 
-
-    this.socket.on("userRecievedCard", msg =>{
-      this.cardRecived(msg);
-    })
+    // this.socket.on("userRecievedCard", msg =>{
+    //   this.cardRecived(msg);
+    // })
 
     this.socket.on("userSentCard", msg =>{
-      console.log(`Recived Card ${ msg.blackCard } form ${ msg.userName } with SocketID = ${ msg.socket }`);
+      console.log(`Recived Card ${ msg.card } form ${ msg.userName } with SocketID = ${ msg.roomCode }`);
       // add card to cardsRecived
 
       // Show cards on the thing
@@ -126,7 +126,7 @@ export default class User {
   // during game;
 
   sendCardToPlayer(){
-    this.socket.emit('submitCard',{ card : this.deck.currentBlackCard , roomCode : this.roomCode });
+    this.socket.emit('submitCard',{ card : this.deck.currentBlackCard , roomCode : this.roomCode , userName : this.userName });
   }
 
   getBlackCard(){

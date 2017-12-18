@@ -12,6 +12,7 @@ class Game {
   }
   addUser(user) {
     this.users.push(user);
+    console.log('Users', this.users)
   }
   isPickingNow(user) {
     this.isPicking.userName = user.userName;
@@ -19,6 +20,10 @@ class Game {
   }
   addCardToTable(card) {
     this.cardsOnTable.push(card);
+  }
+
+  getNextPicker(){
+
   }
 }
 

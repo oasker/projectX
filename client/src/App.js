@@ -19,8 +19,6 @@ class App extends Component {
     super()
     this.user = new User(socket)
     this.view = <LandingPage user = { this.user }/>
-    this.pickingView;
-    this.submitView;
   }
   updateUser(user) {
     this.setState({user : user});
@@ -35,17 +33,22 @@ class App extends Component {
 
   setUI(){
     if(this.state.user.isPicking){
-      this.setState({ view : this.pickingView });
+      this.setState({ view : <PickingView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>});
     }else{
-      this.setState({ view : this.submitView });
+      this.setState({ view : <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/> });
     }
   }
 
   componentDidMount(){
-    this.pickingView = <PickingView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>;
-    this.submitView = <SubmitView user = { this.state.user } updateUser = { this.updateUser.bind(this)}/>;
     this.user.socket.on('gameHasStarted',(msg)=>{
       this.setUI();
+    })
+    this.user.socket.on('isPicking',()=>{
+      this.user.isPicking = true;
+      this.setUI();
+    })
+    this.user.socket.on("cardPicked",(msg)=>{
+      console.log("the user picked",msg)
     })
   }
 
