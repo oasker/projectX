@@ -7,7 +7,7 @@ import './landingPage.css';
 
 /*
   Landing Page contains:
-    - 
+    -
 */
 
 export default class LandingPage extends Component {
@@ -106,6 +106,15 @@ export default class LandingPage extends Component {
     return this.props.userName !== '';
   }
 
+  roomCodeIsSet(){
+    var rC = document.getElementById("joinGameRoomCode").value;
+    if(rC !== ""){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   setUserName(){
     var uN = document.getElementById('userNameInput').value;
     if (uN !== "") {
@@ -120,15 +129,6 @@ export default class LandingPage extends Component {
   setRoomCode(){
     this.props.user.roomCode = document.getElementById("joinGameRoomCode").value;
     this.setState({user : this.props.user })
-  }
-
-  roomCodeIsSet(){
-    var rC = document.getElementById("joinGameRoomCode").value;
-    if(rC !== ""){
-      return true;
-    } else {
-      return false;
-    }
   }
 
   getRoomCodeVal(){
