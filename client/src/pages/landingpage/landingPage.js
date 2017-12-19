@@ -14,6 +14,7 @@ export default class LandingPage extends Component {
 
   constructor(props){
     super(props);
+    this.setUpSocketListners();
   }
 
   componentWillMount(){
@@ -22,6 +23,12 @@ export default class LandingPage extends Component {
 
   componentDidMount(){
     this.setState({user : this.props.user });
+  }
+
+  setUpSocketListners(){
+    this.props.user.socket.on('sucessFullyJoinedGame',()=>{
+      this.setWaitingFroGameComponent();
+    })
   }
 
   //============================================================================
@@ -43,7 +50,7 @@ export default class LandingPage extends Component {
         <UserName/>
         <h4>Your Room Code is</h4>
         <h6>{ this.state.user.roomCode }</h6>
-        <button label = "Everyone has started" fn = { this.initGame.bind(this) }/>
+        <Button label = "Everyone has started" fn = { this.initGame.bind(this) }/>
       </div>
     )
   }
@@ -61,13 +68,13 @@ export default class LandingPage extends Component {
   }
 
   //============================================================================
-  //=== JoinGame Game =========================================================
+  //=== JoinGame Game ==========================================================
   //============================================================================
 
   joinGameComponent(){
     return (
       <div>
-        <Button fn={ this.setGameChoice.bind(this) } label="Back" />
+        <Button fn ={ this.setGameChoice.bind(this) } label="Back" />
         <UserName/>
         <input id='joinGameRoomCode' placeholder="Enter Room Code" className="landing-page-roomcode-input" type="text"/>
         <Button fn = { this.joinGameInit.bind(this) } label="Join Room"/>
@@ -93,7 +100,24 @@ export default class LandingPage extends Component {
   }
 
   //============================================================================
-  //=== Begin Game =========================================================
+  //=== Waiting For Game =======================================================
+  //============================================================================
+
+  waitingForGameComponent(){
+    return(
+      <div>
+        <b>Waiting for Host to start game.</b>
+        <p>Room Code : { this.props.user.roomCode }</p>
+      </div>
+    );
+  }
+
+  setWaitingFroGameComponent(){
+    this.setState({ view : this.waitingForGameComponent() })
+  }
+
+  //============================================================================
+  //=== Begin Game =============================================================
   //============================================================================
 
   initGame(){
