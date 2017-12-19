@@ -92,9 +92,7 @@ export default class User {
   }
 
   setUpSocketListners(){
-
     this.socket.on("newBlackCard",(msg)=>{
-      console.log(msg)
       this.deck.blackCards[this.deck.ind].label = msg;
       this.deck.currentBlackCard = this.deck.blackCards[this.deck.ind].label;
     });
@@ -131,11 +129,6 @@ export default class User {
 
   getBlackCard(){
     this.socket.emit('getBlackCard');
-  }
-
-  sendChoosenCard(card){
-    // card will have user and socket info;
-    this.socket.emit('winningCardChosen', { cardChosen : card })
   }
 
 }

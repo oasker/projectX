@@ -10,16 +10,11 @@
 }
 
 .sb-list {
-  text-align: center;
+  text-align: left;
   float: left;
   color: inherit;
   background: inherit;
-  width: calc(25% - 2%);
-  padding: 1%;
+  width: calc(100% / 2);
   height: 100%;
-}
-
-ul.status-bar>li.sb-list {
-  height: ;
-  % font-size: 10px;
+  padding-left: 5px;
 }
