@@ -30,17 +30,15 @@ io.on('connection', function(socket) {
   //============================================================================
 
   socket.on('joinGame', msg => {
-    console.log("JOINING GAME WITH ROOM CODE ", msg)
     if (gameHandler.roomCodeExists(msg.roomCode.toUpperCase())) {
       gameHandler.nameSpaces[msg.roomCode.toUpperCase()].game.addUser({
         userName: msg.userName,
         socket: socket.id
       });
+      io.to(socket.id).emit('sucessFullyJoinedGame');
     } else {
       socket.emit("err", "room Code doesn't Exists"); // This does this
     }
-    console.log(msg)
-    console.log(gameHandler)
   })
 
   socket.on('startNewGame', msg => {
