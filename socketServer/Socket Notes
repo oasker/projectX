@@ -1,0 +1,3 @@
+The server will send the to a specific ID emit sucessFullyJoinedGame();
+
+io.to(socket.id).emit('sucessFullyJoinedGame');
