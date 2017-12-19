@@ -14,6 +14,7 @@ export default class LandingPage extends Component {
 
   constructor(props){
     super(props);
+    this.setUpSocketListners();
   }
 
   componentWillMount(){
@@ -22,6 +23,12 @@ export default class LandingPage extends Component {
 
   componentDidMount(){
     this.setState({user : this.props.user });
+  }
+
+  setUpSocketListners(){
+    this.props.user.socket.on('sucessFullyJoinedGame',()=>{
+      this.setWaitingFroGameComponent();
+    })
   }
 
   //============================================================================
