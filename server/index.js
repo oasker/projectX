@@ -1,4 +1,5 @@
 // server/index.js
+
 'use strict';
 
 const app = require('./app');
@@ -7,6 +8,4 @@ const PORT = process.env.PORT || 9000;
 
 require('./socketServer.js'); // Start Socket Server
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}!`);
-});
+app.listen(PORT, () => console.log(`App listening on port ${PORT}!`) );
