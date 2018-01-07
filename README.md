@@ -1,16 +1,12 @@
-# Using `create-react-app` with React Router + Express.js
-
-**:warning: This is outdated, please refer to the official and new [react-router docs](https://reacttraining.com/react-router/)**
-
-See : https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d
+# GameCase
 
 ## Development
 
 Clone this repository:
 
 ```sh
-git clone https://github.com/mrpatiwi/routed-react.git
-cd routed-react
+git clone https://github.com/jTronixDevelopment/gameCast.git
+cd gameCast
 ```
 
 Install dependencies:
